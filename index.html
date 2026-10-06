@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sleep Noise</title>
+<meta name="description" content="Pink and brown noise for sleep, focus and calm.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Noise">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app" id="app">
+  <header class="top">
+    <span class="brand">Sleep Noise</span>
+    <button class="icon-btn" id="fsBtn" type="button" aria-label="Full screen" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
+  </header>
+
+  <section class="hero">
+    <button class="play" id="playBtn" type="button" aria-label="Play" aria-pressed="false">
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+    </button>
+    <p class="status" id="status" aria-live="polite">Tap to play</p>
+  </section>
+
+  <section class="group" aria-label="Sound">
+    <div class="choices" role="radiogroup" aria-label="Sound">
+      <button class="choice" type="button" role="radio" data-color="pink" aria-checked="true">
+        <span class="dot pink"></span>
+        <span class="c-name">Pink</span>
+        <span class="c-sub">Soft, like steady rain</span>
+      </button>
+      <button class="choice" type="button" role="radio" data-color="brown" aria-checked="false">
+        <span class="dot brown"></span>
+        <span class="c-name">Brown</span>
+        <span class="c-sub">Deep, like a waterfall</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="group">
+    <label class="row-label" for="tone">Tone</label>
+    <div class="slider-row">
+      <span class="end">Deeper</span>
+      <input type="range" id="tone" min="0" max="100" step="1" value="55">
+      <span class="end">Brighter</span>
+    </div>
+  </section>
+
+  <section class="group">
+    <label class="row-label" for="vol">Volume</label>
+    <div class="slider-row">
+      <svg class="end-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/></svg>
+      <input type="range" id="vol" min="0" max="100" step="1" value="35">
+      <svg class="end-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+    </div>
+    <p class="hint" id="volHint" hidden>That's loud. For sleep, just loud enough to cover other sounds is kinder to ears and speakers.</p>
+  </section>
+
+  <section class="group">
+    <span class="row-label" id="timerLabel">Turn off after</span>
+    <div class="chips" role="radiogroup" aria-labelledby="timerLabel">
+      <button class="chip" type="button" role="radio" data-min="0">Never</button>
+      <button class="chip" type="button" role="radio" data-min="30">30 min</button>
+      <button class="chip" type="button" role="radio" data-min="60">1 h</button>
+      <button class="chip" type="button" role="radio" data-min="120">2 h</button>
+      <button class="chip" type="button" role="radio" data-min="240">4 h</button>
+      <button class="chip" type="button" role="radio" data-min="480">8 h</button>
+    </div>
+  </section>
+
+  <p class="hint" id="battHint" hidden>Battery is low. Plug in to keep playing through the night.</p>
+  <p class="foot">You can lock your screen — the sound keeps playing.</p>
+</main>
+
+<div class="veil" id="veil" aria-hidden="true">
+  <span id="veilText">Playing</span>
+  <span class="veil-sub">Tap to show controls</span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

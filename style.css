@@ -1,0 +1,121 @@
+/* Night palette: pure black for OLED, warm low-brightness tones, no blue light. */
+:root {
+  --bg: #000;
+  --card: #0d0a08;
+  --line: #241d17;
+  --fg: #b39c84;
+  --muted: #6b5c4d;
+  --accent: #c8915f;
+  --pink: #c48b8b;
+  --brown: #a27a52;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; background: var(--bg); }
+body {
+  color: var(--fg);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--muted); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+.app {
+  max-width: 460px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+           max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.top { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+.brand { color: var(--muted); font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; color: var(--muted); }
+.icon-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.hero { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 8px 0 4px; }
+.play {
+  width: 148px; height: 148px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  color: var(--accent);
+}
+.play svg { width: 54px; height: 54px; fill: currentColor; grid-area: 1 / 1; }
+.play .i-pause { display: none; }
+.play[aria-pressed="true"] { border-color: var(--accent); }
+.play[aria-pressed="true"] .i-play { display: none; }
+.play[aria-pressed="true"] .i-pause { display: block; }
+.play:active { transform: scale(.97); }
+.status { margin: 0; min-height: 1.4em; color: var(--muted); font-size: 15px; text-align: center; }
+
+.group { display: flex; flex-direction: column; gap: 10px; }
+.row-label { font-size: 14px; color: var(--muted); }
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice {
+  text-align: left; padding: 14px; border-radius: 16px;
+  background: var(--card); border: 1.5px solid var(--line);
+  display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 2px; align-items: center;
+}
+.choice[aria-checked="true"] { border-color: var(--accent); }
+.dot { width: 12px; height: 12px; border-radius: 50%; grid-row: 1; }
+.dot.pink { background: var(--pink); }
+.dot.brown { background: var(--brown); }
+.c-name { font-size: 17px; }
+.c-sub { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.end { font-size: 13px; color: var(--muted); width: 58px; }
+.end:last-child { text-align: right; }
+.end-i { width: 22px; height: 22px; flex: none; fill: var(--muted); }
+.end-i .wave { fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  flex: 1; min-width: 0; height: 44px; margin: 0; background: transparent;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: var(--line); }
+input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: var(--line); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 28px; height: 28px; margin-top: -11px;
+  border-radius: 50%; background: var(--accent); border: 0;
+}
+input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); border: 0; }
+
+.chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.chip {
+  padding: 11px 6px; border-radius: 12px; font-size: 15px;
+  background: var(--card); border: 1.5px solid var(--line);
+}
+.chip[aria-checked="true"] { border-color: var(--accent); color: var(--accent); }
+
+.hint { margin: 0; font-size: 13px; color: var(--accent); }
+.foot { margin: auto 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+
+/* Idle veil: after a while the screen goes almost fully black so it draws little power
+   and nothing gets bumped by accident. One tap brings the controls back. */
+.veil {
+  position: fixed; inset: 0; background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  color: #3a3129; font-size: 15px;
+  opacity: 0; pointer-events: none; transition: opacity 1.2s;
+}
+.veil-sub { font-size: 12px; color: #2a231d; }
+body.dim .veil { opacity: 1; pointer-events: auto; }
+
+@media (min-height: 760px) { .app { gap: 28px; } .hero { padding-top: 24px; } }
+@media (orientation: landscape) and (max-height: 520px) {
+  .app { max-width: 820px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
+  .top, .foot, #battHint { grid-column: 1 / -1; }
+  .hero { grid-row: 2 / span 4; justify-content: center; }
+  .play { width: 120px; height: 120px; }
+}
+@media (prefers-reduced-motion: reduce) { .veil { transition: none; } }
